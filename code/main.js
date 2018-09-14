@@ -149,8 +149,6 @@
       display_area.appendChild(item)
     }
 
-    selectItem.call(nextItem())
-
     document.getElementById('last').onclick = function(){
       selectItem.call(lastItem())
     }
@@ -191,6 +189,8 @@
           item.className += ' done'
         }
       }
+      selectItem.call(nextItem())
+
     }else{
       localStorage.setItem('colourObj', JSON.stringify({message: "n"}))
     }
