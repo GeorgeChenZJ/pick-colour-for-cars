@@ -1,6 +1,6 @@
 ;(function(){
 
-  var NUM = 2652
+  var NUM = 3555
 
   var link_items = []
   var where = -1
@@ -41,15 +41,7 @@
     return item
   }
 
-  var xmlhttp = new XMLHttpRequest()
   var colour_dict
-  xmlhttp.onreadystatechange = function(){
-    if(this.readyState == 4 && this.status == 200){
-      colour_dict = JSON.parse(this.responseText)
-    }
-  }
-  xmlhttp.open('GET', 'colours.json', true)
-  xmlhttp.send()
 
   var setItemColour = function(item, colour){
     item._colour = colour.slice()
@@ -172,6 +164,7 @@
         var colourObj = localStorage.getItem('colourObj');
         localStorage.setItem('recoverColourObj', colourObj)
         localStorage.setItem('colourObj', JSON.stringify({message: "n"}))
+        location.reload()
       }
     }
     var colourObj = localStorage.getItem('colourObj')
@@ -189,11 +182,20 @@
           item.className += ' done'
         }
       }
-      selectItem.call(nextItem())
 
     }else{
       localStorage.setItem('colourObj', JSON.stringify({message: "n"}))
     }
+
+    var xmlhttp = new XMLHttpRequest()
+    xmlhttp.onreadystatechange = function(){
+      if(this.readyState == 4 && this.status == 200){
+        colour_dict = JSON.parse(this.responseText)
+        selectItem.call(nextItem())
+      }
+    }
+    xmlhttp.open('GET', 'colours.json', true)
+    xmlhttp.send()
   }
 
 
